@@ -9,8 +9,10 @@ class InterceptHandler(logging.Handler):
         logger_opt = logger.opt(depth=6, exception=record.exc_info)
 
 
+@logger.catch
 def init_log():
     # set loguru format for root logger
+    logger.debug("start logger init")
     logging.getLogger().handlers = [InterceptHandler()]
 
     # logging properties are defined in config.py
@@ -28,6 +30,7 @@ def init_log():
 
     logging.getLogger("uvicorn.access").handlers = [InterceptHandler()]
     logging.basicConfig(handlers=[InterceptHandler()], level=0)
+    logger.debug("finish logger init")
 
 
 def report_log_error(
